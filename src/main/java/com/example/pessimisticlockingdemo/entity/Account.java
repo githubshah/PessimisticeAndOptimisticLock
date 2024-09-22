@@ -14,11 +14,6 @@ public class Account {
     private BigDecimal balance;
     private String balanceSheet = "";
 
-    //@Version
-
-    private Long version; // For optimistic locking
-    // Getters and Setters
-
     public Long getId() {
         return id;
     }
