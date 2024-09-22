@@ -71,7 +71,7 @@ public class SerializableLockingTest implements CommandLineRunner {
             try {
                 System.out.println("Thread 2: Starting transaction to decrease quantity by 5");
                 Thread.sleep(100);
-                transferService.transfer2(1L, 2L, new BigDecimal(200));
+                transferService.transfer(1L, 2L, new BigDecimal(200));
                 System.out.println("Thread 2: Transaction completed");
             } catch (Exception e) {
                 System.err.println("Thread 2: " + e.getMessage());
