@@ -19,75 +19,42 @@ public class TransferService {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void transfer(Long fromAccountId, Long toAccountId, BigDecimal amount) {
         try {
-            System.out.println(String.format("step 1: Transfer amount: %s from-to %s:%s ", amount, fromAccountId,
-                    toAccountId));
-            Account fromAccount = accountRepository.findById(fromAccountId)
+            System.out.println(String.format("step:1 getting account"));
+            Account account = accountRepository.findById(fromAccountId)
                     .orElseThrow(() -> new IllegalArgumentException("From account not found"));
-            System.out.println(String.format("step 2: Transfer amount: %s from-to %s:%s, get fromAccount: %s ", amount,
-                    fromAccountId, toAccountId, fromAccount));
-
-            Account toAccount = accountRepository.findById(toAccountId)
-                    .orElseThrow(() -> new IllegalArgumentException("To account not found"));
-            System.out.println(String.format("step 3: Transfer amount: %s from-to %s:%s, get toAccount: %s ", amount,
-                    fromAccountId, toAccountId, toAccount));
-
-            if (fromAccount.getBalance().compareTo(amount) < 0) {
-                throw new IllegalArgumentException("Insufficient funds");
-            }
-
-            // Perform the transfer
-            fromAccount.setBalance(fromAccount.getBalance().subtract(amount));
-            toAccount.setBalance(toAccount.getBalance().add(amount));
+            System.out.println(String.format("step:2 account fetched: %s", account));
+            System.out.println(String.format("step:3 setting balance 5000"));
+            account.setBalance(new BigDecimal(5000));
+            System.out.println(String.format("step:4 seted balance 5000"));
             // Save accounts
-            Thread.sleep(100);
-            Account fromAccountSaved = accountRepository.save(fromAccount);
-            Account toAccountSaved = accountRepository.save(toAccount);
-            Thread.sleep(80);
-            System.out.println(String.format("step 4: Transfer amount: %s from-to %s:%s, save fromAccountSaved: %s ", amount,
-                    fromAccountId, toAccountId, fromAccountSaved));
-            System.out.println(String.format("step 5: Transfer amount: %s from-to %s:%s, save toAccount: %s ", amount,
-                    fromAccountId, toAccountId, toAccountSaved));
+            System.out.println(String.format("step:5 transaction sleep for 3sec"));
+            Thread.sleep(3000);
+            Account account1 = accountRepository.findById(fromAccountId)
+                    .orElseThrow(() -> new IllegalArgumentException("From account not found"));
+            System.out.println(String.format("step:6 transaction awake fetched again: %s", account1));
+            Account fromaccountsaved = accountRepository.save(account);
+            System.out.println(String.format("step:7 after transaction save %s", fromaccountsaved));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(String.format("step 6: Transfer amount: %s from-to %s:%s, done ", amount, fromAccountId,
-                toAccountId));
     }
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void transfer2(Long fromAccountId, Long toAccountId, BigDecimal amount) {
         try {
-            System.out.println(String.format("step 1: Transfer amount: %s from-to %s:%s ", amount, fromAccountId,
-                    toAccountId));
-            Account fromAccount = accountRepository.findById(fromAccountId)
+            Thread.sleep(1000);
+            System.err.println(String.format("step:1 getting account"));
+            Account account = accountRepository.findById(fromAccountId)
                     .orElseThrow(() -> new IllegalArgumentException("From account not found"));
-            System.out.println(String.format("step 2: Transfer amount: %s from-to %s:%s, get fromAccount: %s ", amount,
-                    fromAccountId, toAccountId, fromAccount));
-
-            Account toAccount = accountRepository.findById(toAccountId)
-                    .orElseThrow(() -> new IllegalArgumentException("To account not found"));
-            System.out.println(String.format("step 3: Transfer amount: %s from-to %s:%s, get toAccount: %s ", amount,
-                    fromAccountId, toAccountId, fromAccount));
-
-            if (fromAccount.getBalance().compareTo(amount) < 0) {
-                throw new IllegalArgumentException("Insufficient funds");
-            }
-            // Perform the transfer
-            fromAccount.setBalance(fromAccount.getBalance().subtract(amount));
-            toAccount.setBalance(toAccount.getBalance().add(amount));
+            System.err.println(String.format("step:2 account fetched: %s", account));
+            System.err.println(String.format("step:3 setting balance 80000"));
+            account.setBalance(new BigDecimal(80000));
+            System.err.println(String.format("step:4 seted balance 80000"));
             // Save accounts
-            Thread.sleep(100);
-            Account fromAccountSaved = accountRepository.save(fromAccount);
-            Account toAccountSaved = accountRepository.save(toAccount);
-            Thread.sleep(100);
-            System.out.println(String.format("step 4: Transfer amount: %s from-to %s:%s, save toAccount: %s ", amount,
-                    fromAccountId, toAccountId, fromAccountSaved));
-            System.out.println(String.format("step 5: Transfer amount: %s from-to %s:%s, save toAccount: %s ", amount,
-                    fromAccountId, toAccountId, toAccountSaved));
+            Account fromaccountsaved = accountRepository.save(account);
+            System.err.println(String.format("step:7 after transaction save %s", fromaccountsaved));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(String.format("step 6: Transfer amount: %s from-to %s:%s, done ", amount, fromAccountId,
-                toAccountId));
     }
 }
