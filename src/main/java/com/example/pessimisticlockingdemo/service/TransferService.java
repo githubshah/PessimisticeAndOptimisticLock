@@ -39,8 +39,10 @@ public class TransferService {
             fromAccount.setBalance(fromAccount.getBalance().subtract(amount));
             toAccount.setBalance(toAccount.getBalance().add(amount));
             // Save accounts
+            Thread.sleep(100);
             Account fromAccountSaved = accountRepository.save(fromAccount);
             Account toAccountSaved = accountRepository.save(toAccount);
+            Thread.sleep(80);
             System.out.println(String.format("step 4: Transfer amount: %s from-to %s:%s, save fromAccountSaved: %s ", amount,
                     fromAccountId, toAccountId, fromAccountSaved));
             System.out.println(String.format("step 5: Transfer amount: %s from-to %s:%s, save toAccount: %s ", amount,
@@ -74,8 +76,10 @@ public class TransferService {
             fromAccount.setBalance(fromAccount.getBalance().subtract(amount));
             toAccount.setBalance(toAccount.getBalance().add(amount));
             // Save accounts
+            Thread.sleep(100);
             Account fromAccountSaved = accountRepository.save(fromAccount);
             Account toAccountSaved = accountRepository.save(toAccount);
+            Thread.sleep(100);
             System.out.println(String.format("step 4: Transfer amount: %s from-to %s:%s, save toAccount: %s ", amount,
                     fromAccountId, toAccountId, fromAccountSaved));
             System.out.println(String.format("step 5: Transfer amount: %s from-to %s:%s, save toAccount: %s ", amount,
